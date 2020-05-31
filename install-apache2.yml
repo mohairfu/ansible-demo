@@ -1,0 +1,13 @@
+---
+- name: This playbook to install apache2
+  hosts: db
+  become: true
+  tasks:
+  - name: Install apache2 package
+    apt:
+      name: apache2
+      state: present
+  - name: Start apache2 service
+    service:
+      name: apache2
+      state: started

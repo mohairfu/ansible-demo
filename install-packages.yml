@@ -1,0 +1,8 @@
+---
+- name: This playbook to install packages via yum
+  hosts: web
+  tasks:
+  - name: Install GIT package
+    yum:
+      name: tree
+      state: installed
