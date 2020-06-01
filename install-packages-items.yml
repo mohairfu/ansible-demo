@@ -5,5 +5,8 @@
   tasks:
   - name: Install GIT package
     yum:
-      name: ['tree', 'git', 'gcc', 'wget', 'telnet', 'gzip']
+ #     name: ['tree', 'git', 'gcc', 'wget', 'telnet', 'gzip']
+      name: "{{ item }}"
       state: installed
+    with_items:
+      - make

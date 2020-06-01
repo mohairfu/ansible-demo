@@ -1,0 +1,38 @@
+---
+- name: Install tomcat package
+  hosts: all
+  become: true
+  tasks:
+  - name: Install jave package
+    yum:
+      name: java
+      state: installed
+    when: ansible_os_family == "RedHat"
+
+  - name: Install jave on Debian
+    apt:
+      name: default-jdk
+      state: present
+    when: ansible_os_family == "Debian"
+
+  - name: download tomcat package
+    get_url:
+      url: http://apachemirror.wuchna.com/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz
+      dest: /opt
+
+  - name: untar the tomcat package
+    unarchive:
+      src: /opt/apache-tomcat-8.5.55.tar.gz
+      dest: /opt
+      remote_src: yes
+
+  - name: Change permission
+    file:
+      path: /opt/apache-tomcat-8.5.55/bin/startup.sh
+      mode: 0777
+
+  - name: start tomcat services
+    shell: nohup ./startup.sh
+    args:
+      chdir: /opt/apache-tomcat-8.5.55/bin
+    
